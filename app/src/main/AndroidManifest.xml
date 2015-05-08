@@ -21,6 +21,14 @@
             android:label="@string/title_activity_add_new_record" >
         </activity>
         <activity
+            android:name="com.catrock.phenologyfriend.AddObservationPlantActivity"
+            android:label="@string/title_activity_add_observation_plant" >
+        </activity>
+        <activity
+            android:name="com.catrock.phenologyfriend.AddObservationAnimalActivity"
+            android:label="@string/title_activity_add_observation_animal" >
+        </activity>
+        <activity
             android:name="com.catrock.phenologyfriend.SettingsActivity"
             android:label="@string/title_activity_settings" >
         </activity>

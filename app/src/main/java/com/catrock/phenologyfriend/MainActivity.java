@@ -41,15 +41,28 @@ public class MainActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    // Display Settings activity.
     public void showSettings() {
         startActivity(new Intent(this, SettingsActivity.class));
     }
 
+    // Display About activity.
     public void showAbout() {
         startActivity(new Intent(this, AboutActivity.class));
     }
 
+    // Display Add New Record activity.
     public void showAddNewRecord(View v) {
         startActivity(new Intent(this, AddNewRecordActivity.class));
+    }
+
+    // Display Add Observation Plant activity.
+    public void showAddObservationPlant(View v) {
+        startActivity(new Intent(this, AddObservationPlantActivity.class));
+    }
+
+    // Display Add Observation Animal activity.
+    public void showAddObservationAnimal(View v) {
+        startActivity(new Intent(this, AddObservationAnimalActivity.class));
     }
 }
