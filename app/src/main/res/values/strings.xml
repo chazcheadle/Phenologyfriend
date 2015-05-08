@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Phenology Friend</string>
+    <string name="title_activity_add_new_record">Add New Record</string>
+    <string name="title_activity_settings">Settings</string>
+    <string name="title_activity_about">About</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_about">About</string>
+    <string name="add_new_record_text">Add a new record</string>
+    <string name="about_text">About this app.</string>
+    <string name="settings_text">Settings for this app.</string>
+</resources>
