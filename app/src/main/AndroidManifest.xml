@@ -17,10 +17,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.catrock.phenologyfriend.AddNewRecordActivity"
-            android:label="@string/title_activity_add_new_record" >
-        </activity>
-        <activity
             android:name="com.catrock.phenologyfriend.AddObservationPlantActivity"
             android:label="@string/title_activity_add_observation_plant" >
         </activity>

@@ -1,10 +1,9 @@
 package com.catrock.phenologyfriend;
 
-import android.app.Activity;
 import android.os.Bundle;
 
 
-public class AddObservationAnimalActivity extends Activity {
+public class AddObservationAnimalActivity extends MainActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
