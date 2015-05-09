@@ -53,11 +53,6 @@ public class MainActivity extends Activity {
         startActivity(new Intent(this, AboutActivity.class));
     }
 
-    // Display Add New Record activity.
-    public void showAddNewRecord(View v) {
-        startActivity(new Intent(this, AddNewRecordActivity.class));
-    }
-
     // Display Add Observation Plant activity.
     public void showAddObservationPlant(View v) {
         startActivity(new Intent(this, AddObservationPlantActivity.class));

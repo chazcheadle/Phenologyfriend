@@ -9,22 +9,13 @@
         android:layout_height="wrap_content"
         android:id="@+id/textView" />
 
-<!--    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/add_new_record_button_text"
-        android:id="@+id/add_button"
-        android:layout_below="@+id/textView"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="80dp"
-        android:onClick="showAddNewRecord"/>-->
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/add_observation_plant_button_text"
         android:id="@+id/add_observation_plant_button"
         android:onClick="showAddObservationPlant"
-        android:layout_above="@+id/add_observation_plant_button"
+        android:layout_above="@+id/add_observation_animal_button"
         android:layout_alignParentEnd="true" />
     <Button
         android:layout_width="match_parent"
