@@ -7,14 +7,22 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-
+import android.widget.TextView;
 
 public class MainActivity extends Activity {
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        // Update last observation dates.
+        TextView plantLatest = (TextView) findViewById(R.id.mainLatestPlantValue);
+        TextView animalLatest = (TextView) findViewById(R.id.mainLatestAnimalValue);
+        plantLatest.setText("May 08, 2015 - 10:33AM");
+        animalLatest.setText("May 04, 2015 - 3:43PM");
+
     }
 
     @Override

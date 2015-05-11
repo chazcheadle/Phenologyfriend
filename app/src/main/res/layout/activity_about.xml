@@ -16,8 +16,16 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="@string/about_page_body"
         android:id="@+id/aboutPageBodyText"
-        android:layout_below="@+id/aboutPageTitleText"
+        android:layout_below="@id/aboutPageTitleText"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="74dp" />
+
+    <TextView android:text="@string/about_page_version"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/aboutPageVersionText"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="40dp" />
 
 </RelativeLayout>

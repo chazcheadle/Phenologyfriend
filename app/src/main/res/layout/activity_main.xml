@@ -3,11 +3,68 @@
     android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".MainActivity">
+    android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".MainActivity"
+    android:id="@+id/mainRelativeLayout">
 
-    <TextView android:text="@string/hello_world" android:layout_width="wrap_content"
+    <TextView android:text="@string/mainLastLabelText" android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/textView" />
+        android:id="@+id/mainLastLabelText"
+        android:layout_above="@+id/mainPlantLastLinearLayout"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:layout_centerHorizontal="true" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_above="@+id/mainAnimalLastLinearLayout"
+        android:layout_alignParentStart="false"
+        android:id="@+id/mainPlantLastLinearLayout">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".25"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="@string/mainLatestPlantText"
+            android:id="@+id/mainLatestPlantText"
+            android:gravity="right|end"
+            android:paddingStart="0dp"
+            android:paddingEnd="8dp" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".75"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text=""
+            android:id="@+id/mainLatestPlantValue"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/add_observation_plant_button"
+        android:orientation="horizontal"
+        android:id="@+id/mainAnimalLastLinearLayout">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".25"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="@string/mainLatestAnimalText"
+            android:id="@+id/mainLatestAnimalText"
+            android:gravity="right|end"
+            android:paddingStart="0dp"
+            android:paddingEnd="8dp" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".75"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text=""
+            android:id="@+id/mainLatestAnimalValue" />
+    </LinearLayout>
 
     <Button
         android:layout_width="match_parent"
@@ -17,6 +74,7 @@
         android:onClick="showAddObservationPlant"
         android:layout_above="@+id/add_observation_animal_button"
         android:layout_alignParentEnd="true" />
+
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -25,5 +83,6 @@
         android:onClick="showAddObservationAnimal"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true" />
+
 
 </RelativeLayout>
