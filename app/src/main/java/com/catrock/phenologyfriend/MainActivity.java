@@ -40,7 +40,7 @@ public class MainActivity extends Activity {
         // as you specify a parent activity in AndroidManifest.xml.
 
         switch (item.getItemId()) {
-            case R.id.action_settings:
+            case R.id.action_preferences:
                 showSettings();
                 return(true);
             case R.id.action_about:
@@ -53,7 +53,7 @@ public class MainActivity extends Activity {
 
     // Display Settings activity.
     public void showSettings() {
-        startActivity(new Intent(this, SettingsActivity.class));
+        startActivity(new Intent(this, Preferences.class));
     }
 
     // Display About activity.
