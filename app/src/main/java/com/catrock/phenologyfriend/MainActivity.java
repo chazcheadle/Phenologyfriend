@@ -1,8 +1,11 @@
 package com.catrock.phenologyfriend;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.app.Activity;
+import android.os.Parcelable;
+import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -23,6 +26,11 @@ public class MainActivity extends Activity {
         plantLatest.setText("May 08, 2015 - 10:33AM");
         animalLatest.setText("May 04, 2015 - 3:43PM");
 
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        String wuapi_key = prefs.getString("credentials_wuapi_key", "");
+        if (wuapi_key != "") {
+            retrieveWeatherData();
+        }
     }
 
     @Override
@@ -53,21 +61,34 @@ public class MainActivity extends Activity {
 
     // Display Settings activity.
     public void showSettings() {
-        startActivity(new Intent(this, Preferences.class));
+        Intent intent = new Intent (this, Preferences.class);
+        startActivity(intent);
     }
 
     // Display About activity.
     public void showAbout() {
-        startActivity(new Intent(this, AboutActivity.class));
+        Intent intent = new Intent (this, AboutActivity.class);
+        startActivity(intent);
     }
 
     // Display Add Observation Plant activity.
     public void showAddObservationPlant(View v) {
-        startActivity(new Intent(this, AddObservationPlantActivity.class));
+        WeatherData obj= new WeatherData("78.5","46");
+
+        Intent intent = new Intent (this, AddObservationPlantActivity.class);
+        intent.putExtra("weatherDataTag", (Parcelable) obj);
+
+        startActivity(intent);
     }
 
     // Display Add Observation Animal activity.
     public void showAddObservationAnimal(View v) {
-        startActivity(new Intent(this, AddObservationAnimalActivity.class));
+        Intent intent = new Intent (this, AddObservationAnimalActivity.class);
+        startActivity(intent);
+    }
+
+    // Retrieve weather data.
+    public void retrieveWeatherData() {
+
     }
 }
