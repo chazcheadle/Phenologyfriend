@@ -4,17 +4,15 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.app.Activity;
-import android.os.Parcelable;
 import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends Activity {
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,8 +26,8 @@ public class MainActivity extends Activity {
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         String wuapi_key = prefs.getString("credentials_wuapi_key", "");
-        if (wuapi_key != "") {
-            retrieveWeatherData();
+        if (!wuapi_key.isEmpty()) {
+            retrieveWeatherData(wuapi_key);
         }
     }
 
@@ -76,7 +74,7 @@ public class MainActivity extends Activity {
         WeatherData obj= new WeatherData("78.5","46");
 
         Intent intent = new Intent (this, AddObservationPlantActivity.class);
-        intent.putExtra("weatherDataTag", (Parcelable) obj);
+        intent.putExtra("weatherDataTag", obj);
 
         startActivity(intent);
     }
@@ -88,7 +86,7 @@ public class MainActivity extends Activity {
     }
 
     // Retrieve weather data.
-    public void retrieveWeatherData() {
-
+    public void retrieveWeatherData(String api_key) {
+        Toast.makeText(this, api_key, Toast.LENGTH_LONG).show();
     }
 }

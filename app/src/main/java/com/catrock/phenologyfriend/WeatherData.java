@@ -5,7 +5,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 /**
- * Class to store and retrieve WeatherUnderground data..
+ * Class to hold Weather data with getters and setters.
  */
 public class WeatherData implements Parcelable {
 
