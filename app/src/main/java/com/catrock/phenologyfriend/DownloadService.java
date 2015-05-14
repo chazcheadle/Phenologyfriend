@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.os.ResultReceiver;
 import android.text.TextUtils;
 import android.util.Log;
+import android.widget.Toast;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -38,6 +40,7 @@ public class DownloadService extends IntentService {
 
         final ResultReceiver receiver = intent.getParcelableExtra("receiver");
         String url = intent.getStringExtra("url");
+        String wuapi_key = intent.getStringExtra("wuapi_key");
 
         Bundle bundle = new Bundle();
 
@@ -46,7 +49,7 @@ public class DownloadService extends IntentService {
             receiver.send(STATUS_RUNNING, Bundle.EMPTY);
 
             try {
-                String[] results = downloadData(url);
+                String[] results = downloadData(url, wuapi_key);
 
                 /* Sending result back to activity */
                 if (null != results && results.length > 0) {
@@ -65,9 +68,13 @@ public class DownloadService extends IntentService {
         this.stopSelf();
     }
 
-    private String[] downloadData(String requestUrl) throws IOException, DownloadException {
+    private String[] downloadData(String requestUrl, String wuapi_key) throws IOException, DownloadException {
         InputStream inputStream = null;
         HttpURLConnection urlConnection = null;
+
+        // Replace API Key
+        String requestFullUrl = requestUrl.replace("APIKEY", wuapi_key);
+Log.d(TAG, requestFullUrl);
 
         /* forming th java.net.URL object */
         URL url = new URL(requestUrl);

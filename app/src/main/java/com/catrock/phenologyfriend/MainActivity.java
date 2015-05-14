@@ -20,6 +20,7 @@ public class MainActivity extends Activity implements DownloadResultReceiver.Rec
     private DownloadResultReceiver mReceiver;
 
     final String url = "http://javatechig.com/api/get_category_posts/?dev=1&slug=android";
+    final String wuurl = "http://api.wunderground.com/api/APIKEY/geolookup/q/37.776289,-122.395234.json";
     private ListView listView = null;
 
     private ArrayAdapter arrayAdapter = null;
@@ -45,9 +46,10 @@ public class MainActivity extends Activity implements DownloadResultReceiver.Rec
             Intent intent = new Intent(Intent.ACTION_SYNC, null, this, DownloadService.class);
 
             /* Send optional extras to Download IntentService */
-            intent.putExtra("url", url);
+            intent.putExtra("url", wuurl);
             intent.putExtra("receiver", mReceiver);
             intent.putExtra("requestId", 101);
+            intent.putExtra("wuapi_key", wuapi_key);
 
             // Start the Intent Service
             startService(intent);
@@ -130,7 +132,7 @@ public class MainActivity extends Activity implements DownloadResultReceiver.Rec
 
                 String[] results = resultData.getStringArray("result");
 Toast.makeText(this, results[1], Toast.LENGTH_LONG).show();
-                WeatherData obj= new WeatherData(results[0],results[1]);
+//                WeatherData obj= new WeatherData(results[0],results[1]);
 
                 /* Update ListView with result */
 //                arrayAdapter = new ArrayAdapter(MainActivity.this, android.R.layout.simple_list_item_2, results);
