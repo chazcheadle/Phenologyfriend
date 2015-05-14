@@ -12,7 +12,7 @@ public class AddObservationPlantActivity extends MainActivity {
         setContentView(R.layout.activity_add_observation_plant);
 
         WeatherData weatherData= getIntent().getParcelableExtra("weatherDataTag");
-        Toast.makeText(this, weatherData.getTemp(), Toast.LENGTH_LONG).show();
+//        Toast.makeText(this, weatherData.getTemp(), Toast.LENGTH_LONG).show();
     }
 
 }

@@ -20,7 +20,6 @@ public class MainActivity extends Activity implements DownloadResultReceiver.Rec
     private DownloadResultReceiver mReceiver;
 
     final String url = "http://javatechig.com/api/get_category_posts/?dev=1&slug=android";
-
     private ListView listView = null;
 
     private ArrayAdapter arrayAdapter = null;
@@ -38,21 +37,24 @@ public class MainActivity extends Activity implements DownloadResultReceiver.Rec
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         String wuapi_key = prefs.getString("credentials_wuapi_key", "");
         if (!wuapi_key.isEmpty()) {
-            retrieveWeatherData(wuapi_key);
+//            retrieveWeatherData(wuapi_key);
+
+            /* Starting Download Service */
+            mReceiver = new DownloadResultReceiver(new Handler());
+            mReceiver.setReceiver(this);
+            Intent intent = new Intent(Intent.ACTION_SYNC, null, this, DownloadService.class);
+
+            /* Send optional extras to Download IntentService */
+            intent.putExtra("url", url);
+            intent.putExtra("receiver", mReceiver);
+            intent.putExtra("requestId", 101);
+
+            // Start the Intent Service
+            startService(intent);
         }
-
-
-        /* Starting Download Service */
-        mReceiver = new DownloadResultReceiver(new Handler());
-        mReceiver.setReceiver(this);
-        Intent intent = new Intent(Intent.ACTION_SYNC, null, this, DownloadService.class);
-
-        /* Send optional extras to Download IntentService */
-        intent.putExtra("url", url);
-        intent.putExtra("receiver", mReceiver);
-        intent.putExtra("requestId", 101);
-
-        startService(intent);
+        else {
+            Toast.makeText(this, "Please configure your API Keys.\nGo to Settings>Credentials/API Keys", Toast.LENGTH_LONG).show();
+        }
 
     }
 
@@ -112,7 +114,7 @@ public class MainActivity extends Activity implements DownloadResultReceiver.Rec
 
     // Retrieve weather data.
     public void retrieveWeatherData(String api_key) {
-        Toast.makeText(this, api_key, Toast.LENGTH_LONG).show();
+//        Toast.makeText(this, api_key, Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -128,6 +130,8 @@ public class MainActivity extends Activity implements DownloadResultReceiver.Rec
 
                 String[] results = resultData.getStringArray("result");
 Toast.makeText(this, results[1], Toast.LENGTH_LONG).show();
+                WeatherData obj= new WeatherData(results[0],results[1]);
+
                 /* Update ListView with result */
 //                arrayAdapter = new ArrayAdapter(MainActivity.this, android.R.layout.simple_list_item_2, results);
 //                listView.setAdapter(arrayAdapter);

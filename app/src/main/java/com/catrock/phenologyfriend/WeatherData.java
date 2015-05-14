@@ -29,6 +29,7 @@ public class WeatherData implements Parcelable {
     public String getHumidity() {
         return Humidity;
     }
+
     public void  setHumidity(String hum) {
         Humidity=hum;
     }

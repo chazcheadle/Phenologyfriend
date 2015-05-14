@@ -57,6 +57,7 @@ public class DownloadService extends IntentService {
 
                 /* Sending error message back to activity */
                 bundle.putString(Intent.EXTRA_TEXT, e.toString());
+                Log.d(TAG, e.toString());
                 receiver.send(STATUS_ERROR, bundle);
             }
         }
@@ -89,7 +90,10 @@ public class DownloadService extends IntentService {
             String[] results = parseResult(response);
             return results;
         } else {
+            Log.d(TAG, "Failed to fetch data!!");
+
             throw new DownloadException("Failed to fetch data!!");
+
         }
     }
 
