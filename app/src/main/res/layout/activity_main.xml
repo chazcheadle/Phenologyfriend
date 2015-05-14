@@ -30,7 +30,8 @@
             android:gravity="end"
             android:paddingLeft="0dp"
             android:paddingEnd="8dp"
-            android:paddingRight="0dp" />
+            android:paddingRight="0dp"
+            tools:ignore="RtlHardcoded" />
 
         <TextView
             android:layout_width="0dp"
@@ -58,7 +59,7 @@
             android:paddingLeft="0dp"
             android:paddingEnd="8dp"
             android:paddingRight="0dp"
-            />
+            tools:ignore="RtlHardcoded" />
 
         <TextView
             android:layout_width="0dp"

@@ -3,16 +3,27 @@ package com.catrock.phenologyfriend;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.app.Activity;
 import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ArrayAdapter;
 
-public class MainActivity extends Activity {
+public class MainActivity extends Activity implements DownloadResultReceiver.Receiver {
+
+    private DownloadResultReceiver mReceiver;
+
+    final String url = "http://javatechig.com/api/get_category_posts/?dev=1&slug=android";
+
+    private ListView listView = null;
+
+    private ArrayAdapter arrayAdapter = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +40,20 @@ public class MainActivity extends Activity {
         if (!wuapi_key.isEmpty()) {
             retrieveWeatherData(wuapi_key);
         }
+
+
+        /* Starting Download Service */
+        mReceiver = new DownloadResultReceiver(new Handler());
+        mReceiver.setReceiver(this);
+        Intent intent = new Intent(Intent.ACTION_SYNC, null, this, DownloadService.class);
+
+        /* Send optional extras to Download IntentService */
+        intent.putExtra("url", url);
+        intent.putExtra("receiver", mReceiver);
+        intent.putExtra("requestId", 101);
+
+        startService(intent);
+
     }
 
     @Override
@@ -88,5 +113,31 @@ public class MainActivity extends Activity {
     // Retrieve weather data.
     public void retrieveWeatherData(String api_key) {
         Toast.makeText(this, api_key, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onReceiveResult(int resultCode, Bundle resultData) {
+        switch (resultCode) {
+            case DownloadService.STATUS_RUNNING:
+
+                setProgressBarIndeterminateVisibility(true);
+                break;
+            case DownloadService.STATUS_FINISHED:
+                /* Hide progress & extract result from bundle */
+                setProgressBarIndeterminateVisibility(false);
+
+                String[] results = resultData.getStringArray("result");
+Toast.makeText(this, results[1], Toast.LENGTH_LONG).show();
+                /* Update ListView with result */
+//                arrayAdapter = new ArrayAdapter(MainActivity.this, android.R.layout.simple_list_item_2, results);
+//                listView.setAdapter(arrayAdapter);
+
+                break;
+            case DownloadService.STATUS_ERROR:
+                /* Handle the error */
+                String error = resultData.getString(Intent.EXTRA_TEXT);
+                Toast.makeText(this, error, Toast.LENGTH_LONG).show();
+                break;
+        }
     }
 }

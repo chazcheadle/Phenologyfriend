@@ -1,12 +1,33 @@
 package com.catrock.phenologyfriend;
 
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
+import android.preference.PreferenceManager;
+import android.widget.Toast;
+
 import java.util.List;
 
 public class Preferences extends PreferenceActivity {
+
+    SharedPreferences.OnSharedPreferenceChangeListener listener;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+
+    }
+
+    SharedPreferences.OnSharedPreferenceChangeListener spChanged = new
+            SharedPreferences.OnSharedPreferenceChangeListener() {
+                @Override
+                public void onSharedPreferenceChanged(SharedPreferences sharedPreferences,
+                                                      String key) {
+                    SharedPreferences SP = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+                    String wuapi_key = SP.getString("credentials_wuapi_key", "NA");
+                    Toast.makeText(getBaseContext(), wuapi_key, Toast.LENGTH_LONG).show();                }
+    };
 
     @Override
     public void onBuildHeaders(List<Header> target) {
