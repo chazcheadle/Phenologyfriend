@@ -16,9 +16,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ArrayAdapter;
 
-public class MainActivity extends Activity implements DownloadResultReceiver.Receiver {
+public class MainActivity extends Activity implements WeatherResultReceiver.Receiver {
 
-    private DownloadResultReceiver mReceiver;
+    private WeatherResultReceiver mReceiver;
 
     final String wu_url = "http://api.wunderground.com/api/APIKEY/geolookup/conditions/q/NY/Garrison.json";
 
@@ -43,12 +43,12 @@ public class MainActivity extends Activity implements DownloadResultReceiver.Rec
         String wuapi_key = prefs.getString("credentials_wuapi_key", "");
         if (wuapi_key.length() > 0) {
 
-            /* Starting Download Service */
-            mReceiver = new DownloadResultReceiver(new Handler());
+            /* Starting Weather Service */
+            mReceiver = new WeatherResultReceiver(new Handler());
             mReceiver.setReceiver(this);
-            Intent intent = new Intent(Intent.ACTION_SYNC, null, this, DownloadService.class);
+            Intent intent = new Intent(Intent.ACTION_SYNC, null, this, WeatherService.class);
 
-            /* Send optional extras to Download IntentService */
+            /* Send optional extras to Weather IntentService */
             intent.putExtra("url", wu_url);
             intent.putExtra("receiver", mReceiver);
             intent.putExtra("wuapi_key", wuapi_key);
@@ -117,17 +117,18 @@ public class MainActivity extends Activity implements DownloadResultReceiver.Rec
     @Override
     public void onReceiveResult(int resultCode, Bundle resultData) {
         switch (resultCode) {
-            case DownloadService.STATUS_RUNNING:
+            case WeatherService.STATUS_RUNNING:
 
                 setProgressBarIndeterminateVisibility(true);
                 break;
-            case DownloadService.STATUS_FINISHED:
+            case WeatherService.STATUS_FINISHED:
                 /* Hide progress & extract result from bundle */
                 setProgressBarIndeterminateVisibility(false);
 
                 String[] results = resultData.getStringArray("result");
                 WeatherData result= new WeatherData(results[0], results[1], results[2]);
                 weatherData = result;
+
                 Toast.makeText(this, "Weather data received.", Toast.LENGTH_LONG).show();
                 Toast.makeText(this, "Weather: " + weatherData.getWeather() + "\n" + weatherData.getTemperature() + " | Hum: " + weatherData.getHumidity(), Toast.LENGTH_LONG).show();
 
@@ -136,7 +137,7 @@ public class MainActivity extends Activity implements DownloadResultReceiver.Rec
 //                listView.setAdapter(arrayAdapter);
 
                 break;
-            case DownloadService.STATUS_ERROR:
+            case WeatherService.STATUS_ERROR:
                 /* Handle the error */
                 String error = resultData.getString(Intent.EXTRA_TEXT);
                 Toast.makeText(this, error, Toast.LENGTH_LONG).show();

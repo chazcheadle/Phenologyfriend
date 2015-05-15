@@ -21,16 +21,16 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class DownloadService extends IntentService {
+public class WeatherService extends IntentService {
 
     public static final int STATUS_RUNNING = 0;
     public static final int STATUS_FINISHED = 1;
     public static final int STATUS_ERROR = 2;
 
-    private static final String TAG = "DownloadService";
+    private static final String TAG = "WeatherService";
 
-    public DownloadService() {
-        super(DownloadService.class.getName());
+    public WeatherService() {
+        super(WeatherService.class.getName());
     }
 
     @Override
@@ -68,7 +68,7 @@ public class DownloadService extends IntentService {
         this.stopSelf();
     }
 
-    private String[] downloadData(String requestUrl, String wuapi_key) throws IOException, DownloadException {
+    private String[] downloadData(String requestUrl, String wuapi_key) throws IOException, WeatherException {
         InputStream inputStream = null;
         HttpURLConnection urlConnection = null;
 
@@ -99,7 +99,7 @@ public class DownloadService extends IntentService {
         } else {
             Log.d(TAG, "Failed to fetch data!!");
 
-            throw new DownloadException("Failed to fetch data!!");
+            throw new WeatherException("Failed to fetch data!!");
 
         }
     }
@@ -146,13 +146,13 @@ public class DownloadService extends IntentService {
         return weatherData;
     }
 
-    public class DownloadException extends Exception {
+    public class WeatherException extends Exception {
 
-        public DownloadException(String message) {
+        public WeatherException(String message) {
             super(message);
         }
 
-        public DownloadException(String message, Throwable cause) {
+        public WeatherException(String message, Throwable cause) {
             super(message, cause);
         }
     }

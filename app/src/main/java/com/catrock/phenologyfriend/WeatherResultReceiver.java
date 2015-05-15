@@ -4,10 +4,10 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.ResultReceiver;
 
-public class DownloadResultReceiver extends ResultReceiver {
+public class WeatherResultReceiver extends ResultReceiver {
     private Receiver mReceiver;
 
-    public DownloadResultReceiver(Handler handler) {
+    public WeatherResultReceiver(Handler handler) {
         super(handler);
     }
 
