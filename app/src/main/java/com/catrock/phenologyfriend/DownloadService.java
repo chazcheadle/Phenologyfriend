@@ -124,6 +124,7 @@ public class DownloadService extends IntentService {
 
     private String[] parseResult(String result) {
 
+        String weather;
         String temperature;
         String humidity;
 
@@ -131,11 +132,12 @@ public class DownloadService extends IntentService {
         try {
             JSONObject response = new JSONObject(result);
             JSONObject current_observation = response.optJSONObject("current_observation");
+            weather = current_observation.getString("weather");
             temperature = current_observation.getString("temperature_string");
-            humidity = current_observation.getString("temperature_string");
-            Log.d(TAG, "Temperature: " + temperature);
-            Log.d(TAG, "Humidity: " + humidity);
-            weatherData = new String[] {temperature, humidity};
+            humidity = current_observation.getString("relative_humidity");
+            Log.d(TAG, "Weather: " + weather + "\n" + temperature + " | Hum: " + humidity);
+            // Create new WeatherData object to store weather.
+            weatherData = new String[] {weather, temperature, humidity};
 
 
         } catch (JSONException e) {

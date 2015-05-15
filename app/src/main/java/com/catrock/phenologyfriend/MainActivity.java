@@ -20,8 +20,8 @@ public class MainActivity extends Activity implements DownloadResultReceiver.Rec
 
     private DownloadResultReceiver mReceiver;
 
-    final String url = "http://javatechig.com/api/get_category_posts/?dev=1&slug=android";
-    final String wuurl = "http://api.wunderground.com/api/APIKEY/geolookup/conditions/q/NY/Garrison.json";
+    final String wu_url = "http://api.wunderground.com/api/APIKEY/geolookup/conditions/q/NY/Garrison.json";
+
     private ListView listView = null;
 
     private ArrayAdapter arrayAdapter = null;
@@ -30,6 +30,7 @@ public class MainActivity extends Activity implements DownloadResultReceiver.Rec
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         // Update last observation dates.
         TextView plantLatest = (TextView) findViewById(R.id.mainLatestPlantValue);
         TextView animalLatest = (TextView) findViewById(R.id.mainLatestAnimalValue);
@@ -38,8 +39,7 @@ public class MainActivity extends Activity implements DownloadResultReceiver.Rec
 
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         String wuapi_key = prefs.getString("credentials_wuapi_key", "");
-        if (!wuapi_key.isEmpty()) {
-//            retrieveWeatherData(wuapi_key);
+        if (wuapi_key.length() > 0) {
 
             /* Starting Download Service */
             mReceiver = new DownloadResultReceiver(new Handler());
@@ -47,9 +47,8 @@ public class MainActivity extends Activity implements DownloadResultReceiver.Rec
             Intent intent = new Intent(Intent.ACTION_SYNC, null, this, DownloadService.class);
 
             /* Send optional extras to Download IntentService */
-            intent.putExtra("url", wuurl);
+            intent.putExtra("url", wu_url);
             intent.putExtra("receiver", mReceiver);
-            intent.putExtra("requestId", 101);
             intent.putExtra("wuapi_key", wuapi_key);
 
             // Start the Intent Service
@@ -101,7 +100,7 @@ public class MainActivity extends Activity implements DownloadResultReceiver.Rec
 
     // Display Add Observation Plant activity.
     public void showAddObservationPlant(View v) {
-        WeatherData obj= new WeatherData("78.5","46");
+        WeatherData obj= new WeatherData("Clear", "78.5", "46");
 
         Intent intent = new Intent (this, AddObservationPlantActivity.class);
         intent.putExtra("weatherDataTag", obj);
@@ -113,11 +112,6 @@ public class MainActivity extends Activity implements DownloadResultReceiver.Rec
     public void showAddObservationAnimal(View v) {
         Intent intent = new Intent (this, AddObservationAnimalActivity.class);
         startActivity(intent);
-    }
-
-    // Retrieve weather data.
-    public void retrieveWeatherData(String api_key) {
-//        Toast.makeText(this, api_key, Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -132,9 +126,9 @@ public class MainActivity extends Activity implements DownloadResultReceiver.Rec
                 setProgressBarIndeterminateVisibility(false);
 
                 String[] results = resultData.getStringArray("result");
-Toast.makeText(this, results[0], Toast.LENGTH_LONG).show();
-                WeatherData weatherData= new WeatherData(results[0], results[1]);
-//                WeatherData obj= new WeatherData(results[0],results[1]);
+                WeatherData weatherData= new WeatherData(results[0], results[1], results[2]);
+                Toast.makeText(this, "Weather data received.", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Weather: " + weatherData.getWeather() + "\n" + weatherData.getTemperature() + " | Hum: " + weatherData.getHumidity(), Toast.LENGTH_LONG).show();
 
                 /* Update ListView with result */
 //                arrayAdapter = new ArrayAdapter(MainActivity.this, android.R.layout.simple_list_item_2, results);
