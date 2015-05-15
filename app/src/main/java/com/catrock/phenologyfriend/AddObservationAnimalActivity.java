@@ -3,6 +3,7 @@ package com.catrock.phenologyfriend;
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
 
 
 public class AddObservationAnimalActivity extends Activity {
@@ -12,6 +13,11 @@ public class AddObservationAnimalActivity extends Activity {
         super.onCreate(savedInstanceState);
         Log.d(getClass().getSimpleName(), "onCreate()");
         setContentView(R.layout.activity_add_observation_animal);
+
+        WeatherData weatherData= getIntent().getParcelableExtra("weatherDataTag");
+        if (weatherData != null) {
+//            Toast.makeText(this, weatherData.getTemperature(), Toast.LENGTH_LONG).show();
+        }
     }
     @Override
     public void onStart() {

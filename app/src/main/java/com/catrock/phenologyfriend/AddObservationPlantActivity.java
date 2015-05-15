@@ -15,8 +15,11 @@ public class AddObservationPlantActivity extends Activity {
         setContentView(R.layout.activity_add_observation_plant);
 
         WeatherData weatherData= getIntent().getParcelableExtra("weatherDataTag");
-        Toast.makeText(this, weatherData.getTemperature(), Toast.LENGTH_LONG).show();
+        if (weatherData != null) {
+            Toast.makeText(this, weatherData.getTemperature(), Toast.LENGTH_LONG).show();
+        }
     }
+
     @Override
     public void onStart() {
         super.onStart();

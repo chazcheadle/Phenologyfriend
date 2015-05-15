@@ -111,6 +111,8 @@ public class MainActivity extends Activity implements WeatherResultReceiver.Rece
     // Display Add Observation Animal activity.
     public void showAddObservationAnimal(View v) {
         Intent intent = new Intent (this, AddObservationAnimalActivity.class);
+        intent.putExtra("weatherDataTag", weatherData);
+
         startActivity(intent);
     }
 
