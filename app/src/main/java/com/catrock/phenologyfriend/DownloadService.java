@@ -73,8 +73,9 @@ public class DownloadService extends IntentService {
         HttpURLConnection urlConnection = null;
 
         // Replace API Key
-        String requestFullUrl = requestUrl.replace("APIKEY", wuapi_key);
-Log.d(TAG, requestFullUrl);
+        requestUrl = requestUrl.replace("APIKEY", wuapi_key);
+//        Log.d(TAG, requestFullUrl);
+        Log.d(TAG, requestUrl);
 
         /* forming th java.net.URL object */
         URL url = new URL(requestUrl);
@@ -124,22 +125,32 @@ Log.d(TAG, requestFullUrl);
 
     private String[] parseResult(String result) {
 
-        String[] blogTitles = null;
+//        String[] blogTitles = null;
+        String[] weatherData = null;
         try {
             JSONObject response = new JSONObject(result);
-            JSONArray posts = response.optJSONArray("posts");
+            weatherData = new String[2];
+/*            JSONArray posts = response.optJSONArray("posts");
             blogTitles = new String[posts.length()];
-
             for (int i = 0; i < posts.length(); i++) {
                 JSONObject post = posts.optJSONObject(i);
                 String title = post.optString("title");
                 blogTitles[i] = title;
-            }
+            }*/
+
+            JSONObject current_observation = response.optJSONObject("current_observation");
+            String temperature_string = current_observation.getString("temperature_string");
+Log.d(TAG, temperature_string);
+//            blogTitles[0] = temperature_string;
+            weatherData[0] = temperature_string;
+            weatherData[1] = temperature_string;
+
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        return blogTitles;
+//        return blogTitles;
+        return weatherData;
     }
 
     public class DownloadException extends Exception {
