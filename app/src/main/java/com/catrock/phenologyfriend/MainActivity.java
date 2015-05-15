@@ -22,6 +22,8 @@ public class MainActivity extends Activity implements DownloadResultReceiver.Rec
 
     final String wu_url = "http://api.wunderground.com/api/APIKEY/geolookup/conditions/q/NY/Garrison.json";
 
+    public WeatherData weatherData;
+
     private ListView listView = null;
 
     private ArrayAdapter arrayAdapter = null;
@@ -100,10 +102,8 @@ public class MainActivity extends Activity implements DownloadResultReceiver.Rec
 
     // Display Add Observation Plant activity.
     public void showAddObservationPlant(View v) {
-        WeatherData obj= new WeatherData("Clear", "78.5", "46");
-
         Intent intent = new Intent (this, AddObservationPlantActivity.class);
-        intent.putExtra("weatherDataTag", obj);
+        intent.putExtra("weatherDataTag", weatherData);
 
         startActivity(intent);
     }
@@ -126,7 +126,8 @@ public class MainActivity extends Activity implements DownloadResultReceiver.Rec
                 setProgressBarIndeterminateVisibility(false);
 
                 String[] results = resultData.getStringArray("result");
-                WeatherData weatherData= new WeatherData(results[0], results[1], results[2]);
+                WeatherData result= new WeatherData(results[0], results[1], results[2]);
+                weatherData = result;
                 Toast.makeText(this, "Weather data received.", Toast.LENGTH_LONG).show();
                 Toast.makeText(this, "Weather: " + weatherData.getWeather() + "\n" + weatherData.getTemperature() + " | Hum: " + weatherData.getHumidity(), Toast.LENGTH_LONG).show();
 
