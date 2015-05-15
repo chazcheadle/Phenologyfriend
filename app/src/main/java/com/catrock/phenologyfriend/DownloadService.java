@@ -74,7 +74,6 @@ public class DownloadService extends IntentService {
 
         // Replace API Key
         requestUrl = requestUrl.replace("APIKEY", wuapi_key);
-//        Log.d(TAG, requestFullUrl);
         Log.d(TAG, requestUrl);
 
         /* forming th java.net.URL object */
@@ -125,31 +124,23 @@ public class DownloadService extends IntentService {
 
     private String[] parseResult(String result) {
 
-//        String[] blogTitles = null;
+        String temperature;
+        String humidity;
+
         String[] weatherData = null;
         try {
             JSONObject response = new JSONObject(result);
-            weatherData = new String[2];
-/*            JSONArray posts = response.optJSONArray("posts");
-            blogTitles = new String[posts.length()];
-            for (int i = 0; i < posts.length(); i++) {
-                JSONObject post = posts.optJSONObject(i);
-                String title = post.optString("title");
-                blogTitles[i] = title;
-            }*/
-
             JSONObject current_observation = response.optJSONObject("current_observation");
-            String temperature_string = current_observation.getString("temperature_string");
-Log.d(TAG, temperature_string);
-//            blogTitles[0] = temperature_string;
-            weatherData[0] = temperature_string;
-            weatherData[1] = temperature_string;
+            temperature = current_observation.getString("temperature_string");
+            humidity = current_observation.getString("temperature_string");
+            Log.d(TAG, "Temperature: " + temperature);
+            Log.d(TAG, "Humidity: " + humidity);
+            weatherData = new String[] {temperature, humidity};
 
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
-//        return blogTitles;
         return weatherData;
     }
 

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.app.Activity;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -146,5 +147,40 @@ Toast.makeText(this, results[0], Toast.LENGTH_LONG).show();
                 Toast.makeText(this, error, Toast.LENGTH_LONG).show();
                 break;
         }
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        Log.d(getClass().getSimpleName(), "onStart()");
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        Log.d(getClass().getSimpleName(), "onResume()");
+    }
+
+    @Override
+    public void onPause() {
+        Log.d(getClass().getSimpleName(), "onPause()");
+
+        super.onPause();
+    }
+
+    @Override
+    public void onStop() {
+        Log.d(getClass().getSimpleName(), "onStop()");
+
+        super.onStop();
+    }
+
+    @Override
+    public void onDestroy() {
+        Log.d(getClass().getSimpleName(), "onDestroy()");
+
+        super.onDestroy();
     }
 }
