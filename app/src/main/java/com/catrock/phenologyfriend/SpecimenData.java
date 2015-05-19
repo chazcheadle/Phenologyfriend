@@ -12,12 +12,18 @@ public class SpecimenData implements Parcelable {
     private int id;
     private String scientificName;
     private String commonName;
+    private String description;
 
+    // Empty constructor.
+    public SpecimenData() {
+
+    }
     // Class Constructor.
-    public SpecimenData (int id, String scientificName, String commonName) {
+    public SpecimenData (int id, String scientificName, String commonName, String description) {
         this.id=id;
         this.scientificName=scientificName;
         this.commonName=commonName;
+        this.description=description;
     }
 
     // Getters and Setters.
@@ -42,6 +48,13 @@ public class SpecimenData implements Parcelable {
         this.commonName=commonName;
     }
 
+    public String getDescription() {
+        return description;
+    }
+    public void setDescription(String commonName) {
+        this.description=description;
+    }
+
     // Parcel part
     private SpecimenData(Parcel in){
         // Read back parcel data in the order it was entered.
@@ -62,6 +75,7 @@ public class SpecimenData implements Parcelable {
         dest.writeInt(id);
         dest.writeString(scientificName);
         dest.writeString(commonName);
+        dest.writeString(description);
     }
 
     public static final Parcelable.Creator<SpecimenData> CREATOR= new Parcelable.Creator<SpecimenData>() {

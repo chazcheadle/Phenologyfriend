@@ -7,7 +7,7 @@ import android.widget.GridLayout;
 
 import java.util.ArrayList;
 import java.util.List;
-
+/*
 public class SpecimenDataAdapter extends DatabaseHelper {
 
     // Retrieve single specimen detail.
@@ -63,3 +63,4 @@ public class SpecimenDataAdapter extends DatabaseHelper {
     }
 
 }
+*/
