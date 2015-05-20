@@ -32,14 +32,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("DROP TABLE IF EXISTS 'specimens'");
-        db.execSQL("CREATE TABLE 'specimens' (id INTEGER PRIMARY KEY AUTOINCREMENT, scientific_name TEXT, common_name TEXT, description TEXT);");
-        ContentValues args = new ContentValues();
-        args.put("scientific_name", "Calinectes sapidis");
-        args.put("common_name", "Blue crab");
-        args.put("description", "A crab that is blue");
-        long rowid= db.insert("specimens", "id", args);
-        String res = String.valueOf(rowid);
-        Log.d(getClass().getSimpleName(), "Added row # " + res);
+        db.execSQL("CREATE TABLE 'specimens' (id INTEGER PRIMARY KEY AUTOINCREMENT, imap_id TEXT, invasive INTEGER, scientific_name TEXT, common_name TEXT, description TEXT);");
+
 
     }
 
@@ -50,19 +44,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     // Retrieve single specimen detail.
-    public SpecimenData getSpecimen(int id) {
+    public SpecimenData getSpecimen(String imap_id) {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.query("specimens", new String[] {
-                        "id", "scientific_name", "common_name", "description" },
-                "id" + "=?" + id, null, null, null, null);
+                        "imap_id", "invasive", "scientific_name", "common_name", "description" },
+                "imap_id" + "=?" + imap_id, null, null, null, null);
         if (cursor != null)
             cursor.moveToFirst();
 
         SpecimenData specimen = new SpecimenData(
-                Integer.parseInt(cursor.getString(0)),
                 cursor.getString(1),
+                Integer.parseInt(cursor.getString(2)),
                 cursor.getString(2),
-                cursor.getString(3));
+                cursor.getString(4),
+                cursor.getString(5));
         // return contact
         return specimen;
     }
@@ -78,20 +73,38 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         // looping through all rows and adding to list
         if (cursor.moveToFirst()) {
-            Log.d(getClass().getSimpleName(), "Retrieved results!");
             do {
                 SpecimenData specimen = new SpecimenData();
-                specimen.setId(Integer.parseInt(cursor.getString(0)));
-                specimen.setScientificName(cursor.getString(1));
-                specimen.setCommonName(cursor.getString(2));
-                specimen.setDescription(cursor.getString(3));
+                specimen.setImapId(cursor.getString(1));
+                specimen.setInvasive(Integer.parseInt(cursor.getString(2)));
+                specimen.setScientificName(cursor.getString(3));
+                specimen.setCommonName(cursor.getString(4));
+                specimen.setDescription(cursor.getString(5));
                 // Adding specimenList to list
                 specimenList.add(specimen);
             } while (cursor.moveToNext());
         }
+        Log.d(getClass().getSimpleName(), "Results: " + specimenList.size());
 
         // return contact list
         return specimenList;
     }
 
+    // Add Specimen to table.
+    public void addSpecimen(SpecimenData specimen) {
+        Log.d(getClass().getSimpleName(), "In addSpecimen");
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues args = new ContentValues();
+        args.put("imap_id", specimen.getImapId());
+        args.put("invasive", specimen.getInvasive());
+        args.put("scientific_name", specimen.getScientificName());
+        args.put("common_name", specimen.getCommonName());
+        args.put("description", specimen.getDescription());
+        long rowid = db.insert("specimens", "description", args);
+        if (rowid >= 0) {
+            Log.d(getClass().getSimpleName(), "Added: " + specimen.getCommonName());
+        } else {
+            Log.d(getClass().getSimpleName(), "Error adding: " + specimen.getCommonName());
+        }
+    }
 }

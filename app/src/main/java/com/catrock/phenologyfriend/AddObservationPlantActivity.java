@@ -1,6 +1,7 @@
 package com.catrock.phenologyfriend;
 
 import android.app.Activity;
+import android.content.ContentValues;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
@@ -35,10 +36,12 @@ public class AddObservationPlantActivity extends Activity {
         Log.d(getClass().getSimpleName(), "onResume()");
         DatabaseHelper db=DatabaseHelper.getInstance(this);
         Log.d(getClass().getSimpleName(), db.getDatabaseName());
+
+        db.addSpecimen(new SpecimenData("NY-10101", 1, "Calinectes sapidis", "Blue crab", "A crab that is blue"));
+
         List<SpecimenData> specimens = db.getAllSpecimens();
-        Log.d(getClass().getSimpleName(), "Results: " + String.valueOf(specimens.size()));
         SpecimenData specimen = specimens.get(0);
-        Log.d(getClass().getSimpleName(), specimen.getScientificName());
+        Log.d(getClass().getSimpleName(), specimen.getCommonName());
     }
 
     @Override
