@@ -37,11 +37,15 @@ public class AddObservationPlantActivity extends Activity {
         DatabaseHelper db=DatabaseHelper.getInstance(this);
         Log.d(getClass().getSimpleName(), db.getDatabaseName());
 
-        db.addSpecimen(new SpecimenData("NY-10101", 1, "Calinectes sapidis", "Blue crab", "A crab that is blue"));
+        db.addSpecimen(new SpecimenData("NY-10101", 1, "Callinectes sapidus", "Blue crab", "A crab that is blue"));
 
-        List<SpecimenData> specimens = db.getAllSpecimens();
+/*        List<SpecimenData> specimens = db.getAllSpecimens();
         SpecimenData specimen = specimens.get(0);
-        Log.d(getClass().getSimpleName(), specimen.getCommonName());
+        Log.d(getClass().getSimpleName(), specimen.getCommonName());*/
+
+        List<SpecimenData> specimens = db.autoCompleteList("Callinectes");
+        SpecimenData specimen = specimens.get(0);
+        Log.d(getClass().getSimpleName(), specimen.getScientificName());
     }
 
     @Override

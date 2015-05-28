@@ -7,6 +7,14 @@
     tools:context="com.catrock.phenologyfriend.AddObservationPlantActivity">
 
     <TextView android:text="@string/add_observation_plant_text" android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:id="@+id/textView" />
+
+    <com.catrock.phenologyfriend.CustomAutoCompleteView
+        android:id="@+id/addPlantAutocomplete"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:completionThreshold="1" >
+    </com.catrock.phenologyfriend.CustomAutoCompleteView>
 
 </RelativeLayout>

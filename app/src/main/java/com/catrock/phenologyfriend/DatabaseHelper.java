@@ -107,4 +107,46 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             Log.d(getClass().getSimpleName(), "Error adding: " + specimen.getCommonName());
         }
     }
+
+    // Read records related to the search term
+    public List<SpecimenData> autoCompleteList(String searchTerm) {
+        List<SpecimenData> specimenList = new ArrayList<SpecimenData>();
+
+        // select query
+        String sql = "";
+        sql += "SELECT * FROM specimens";
+        sql += " WHERE scientific_name LIKE '%" + searchTerm + "%'";
+        sql += " ORDER BY scientific_name DESC";
+        sql += " LIMIT 0,5";
+
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        // execute the query
+        Cursor cursor = db.rawQuery(sql, null);
+
+        int recCount = cursor.getCount();
+
+        SpecimenData[] specimenData = new SpecimenData[recCount];
+        int x = 0;
+
+        // looping through all rows and adding to list
+        if (cursor.moveToFirst()) {
+            do {
+                SpecimenData specimen = new SpecimenData();
+                specimen.setImapId(cursor.getString(1));
+                specimen.setInvasive(Integer.parseInt(cursor.getString(2)));
+                specimen.setScientificName(cursor.getString(3));
+                specimen.setCommonName(cursor.getString(4));
+                specimen.setDescription(cursor.getString(5));
+                // Adding specimenList to list
+                specimenList.add(specimen);
+            } while (cursor.moveToNext());        }
+
+        cursor.close();
+        db.close();
+
+        return specimenList;
+
+    }
+
 }
