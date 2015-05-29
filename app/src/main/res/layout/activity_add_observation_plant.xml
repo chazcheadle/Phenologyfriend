@@ -10,11 +10,31 @@
         android:layout_height="wrap_content"
         android:id="@+id/textView" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Scientific Name"
+        android:id="@+id/scientificNameToggleLabel"
+        android:layout_alignBottom="@+id/scientificNameToggleBtn"
+        android:layout_toStartOf="@+id/scientificNameToggleBtn" />
+
+    <ToggleButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Scientific Name"
+        android:id="@+id/scientificNameToggleBtn"
+        android:layout_alignParentEnd="true"
+        android:checked="true"
+        android:layout_below="@+id/textView" />
+
     <com.catrock.phenologyfriend.CustomAutoCompleteView
         android:id="@+id/addPlantAutocomplete"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:completionThreshold="1" >
+        android:completionThreshold="1"
+        android:layout_below="@+id/scientificNameToggleBtn"
+        android:layout_alignParentEnd="true">
     </com.catrock.phenologyfriend.CustomAutoCompleteView>
 
 </RelativeLayout>
